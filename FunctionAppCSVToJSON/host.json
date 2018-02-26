@@ -1,2 +1,12 @@
 {
+  "logger": {
+    "categoryFilter": {
+      "defaultLevel": "Information",
+      "categoryLevels": {
+        "Host.Results": "Error",
+        "Function": "Information",
+        "Host.Aggregator": "Information"
+      }
+    }
+  }
 }
