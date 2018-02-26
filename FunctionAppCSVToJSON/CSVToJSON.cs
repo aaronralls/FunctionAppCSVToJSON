@@ -21,7 +21,7 @@ namespace FunctionAppCSVToJSON
         {
             log.Info("C# HTTP trigger function CSVToJSON processed a request.");
 
-            char[] fieldSeperator = new char[] { '\r' };
+            char[] fieldSeperator = new char[] { ',' };
 
             string fileName = req.Query["fileName"];
             string hasHeaders = req.Query["hasHeaders"];
@@ -30,10 +30,11 @@ namespace FunctionAppCSVToJSON
             string requestBody = new StreamReader(req.Body).ReadToEnd();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             int rowsToSkip = 0;
+            long lineSkipCounter = 0;
 
             fileName = fileName ?? data?.fileName;
             hasHeaders = hasHeaders ?? data?.hasHeaders;
-            rowsToSkipStr = rowsToSkipStr ?? data.rowsToSkip;
+            rowsToSkipStr = rowsToSkipStr ?? data?.rowsToSkip;
 
             if (rowsToSkipStr == null)
             {
@@ -55,13 +56,18 @@ namespace FunctionAppCSVToJSON
             }
             else
             {
-                if (hasHeaders == "True")
+                if (hasHeaders == "True" || hasHeaders == "true" || hasHeaders.ToUpper() == "TRUE")
                 {
-                    rowsToSkip += 1;
+                    //if the rows to skip value was set to 1 and they have headers then we
+                    //do not need to increment the rows to skip.
+                    if(rowsToSkip == 0)
+                    {
+                        rowsToSkip = 1;
+                    }                    
                 }
             }
 
-            dynamic csvData = data?.csv;
+            string csvData = data?.csv;
 
             if (csvData == null)
             {
@@ -72,7 +78,7 @@ namespace FunctionAppCSVToJSON
 
             string[] csvLines = ToLines(csvData);
 
-            log.Info(string.Format("There are {0} lines in the file {1}.", csvData.Count(), fileName));
+            log.Info(string.Format("There are {0} lines in the csv content {1}.", csvLines.Count(), fileName));
 
             var headers = csvLines[0].Split(fieldSeperator).ToList<string>();
 
@@ -95,12 +101,18 @@ namespace FunctionAppCSVToJSON
 
                     resultSet.Rows.Add(lineObject);
                 }
+                else
+                {
+                    lineSkipCounter += 1;
+                }
             }
+
+            log.Info(string.Format("There were {0} lines skipped, including the header row.", lineSkipCounter));
 
             return (ActionResult)new OkObjectResult(resultSet);
         }
 
-        private static string[] ToLines(dynamic dataIn)
+        private static string[] ToLines(string dataIn)
         {            
             char[] EOLMarkerR = new char[] { '\r' };
             char[] EOLMarkerN = new char[] { '\n' };
@@ -108,15 +120,15 @@ namespace FunctionAppCSVToJSON
 
             //check to see if the file has both \n and \r for end of line markers.
             //common for files comming from Unix\Linux systems.
-            if (dataIn.IndexOf(EOLMarkerN) > 0 && dataIn.IndexOf(EOLMarkerR) > 0)
+            if (dataIn.IndexOf('\n') > 0 && dataIn.IndexOf('\r') > 0)
             {
                 //if we find both just remove one of them.
-                dataIn = dataIn.Replace(EOLMarkerN, "");
+                dataIn = dataIn.Replace("\n", "");
             }
             //If the file only has \n then we will use that as the EOL marker to seperate the lines.
-            else if(dataIn.IndexOf(EOLMarkerN) > 0)
+            else if(dataIn.IndexOf('\n') > 0)
             {
-                EOLMarker = EOLMarkerN;
+                EOLMarker = EOLMarkerN; 
             }
 
             //How do we know the dynamic data will have Split capability?
