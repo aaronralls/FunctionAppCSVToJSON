@@ -8,12 +8,37 @@ I created this Azure Function as part of a larger solution to process incomming 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+### Sample Input
+
+The JSON the function accepts consists of the followning fields.
+
+rowsToSkip - This indicates the number of rows to skip in the conversion process.
+
+fileName - This is the source file where the data came from. This is passed in for down stream processes that may need to know which file was processed.
+
+hasHeaders - This bool value is used to indicated if the data has headers in the file.
+
+csv - This is the raw data from the source file that you want converted to JSON.
+This content may contain \r\n or \n end of line markers. The function will detect them an process the csv data accordingly.
+
+```
+{
+  "rowsToSkip": 1,
+  "fileName": "MyTestCSVFile.csv",
+  "hasHeaders": true,
+  "csv":"ID,Name,Score
+1,Aaron,99
+2,Dave,55
+3,Susy,77
+"
+}
+```
 ### Prerequisites
 
 What things you need to install the software and how to install them
 
 ```
-Give examples
+Visual Studio 15.5.7 
 ```
 
 ### Installing
