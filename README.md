@@ -72,7 +72,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Aaron Ralls** - *Initial work* - [Aaron Ralls](https://github.com/Aaron Ralls)
+* **Aaron Ralls** - *Initial work* - [Aaron Ralls](https://github.com/AaronRalls)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
