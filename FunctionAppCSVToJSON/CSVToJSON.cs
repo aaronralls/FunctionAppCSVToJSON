@@ -26,6 +26,7 @@ namespace FunctionAppCSVToJSON
             string fileName = req.Query["fileName"];
             string hasHeaders = req.Query["hasHeaders"];
             string rowsToSkipStr = req.Query["rowsToSkip"];
+            string errorMessage = "";
 
             string requestBody = new StreamReader(req.Body).ReadToEnd();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
@@ -38,7 +39,9 @@ namespace FunctionAppCSVToJSON
 
             if (rowsToSkipStr == null)
             {
-                return new BadRequestObjectResult("Please pass a rowsToSkip on the query string or in the request body");
+                errorMessage = "Please pass a rowsToSkip on the query string or in the request body";
+                log.Info("BadRequest: " + errorMessage);
+                return new BadRequestObjectResult(errorMessage);
             }
             else
             {
@@ -47,12 +50,16 @@ namespace FunctionAppCSVToJSON
 
             if (fileName == null)
             {
-                return new BadRequestObjectResult("Please pass a fileName on the query string or in the request body");
+                errorMessage = "Please pass a fileName on the query string or in the request body";
+                log.Info("BadRequest: " + errorMessage);
+                return new BadRequestObjectResult(errorMessage);
             }
 
             if (hasHeaders == null)
             {
-                return new BadRequestObjectResult("Please pass a hasHeaders on the query string or in the request body");
+                errorMessage = "Please pass a hasHeaders on the query string or in the request body";
+                log.Info("BadRequest: " + errorMessage);
+                return new BadRequestObjectResult(errorMessage);
             }
             else
             {
@@ -71,7 +78,9 @@ namespace FunctionAppCSVToJSON
 
             if (csvData == null)
             {
-                return new BadRequestObjectResult("Please pass the csv data in using the csv attribute in the request body");
+                errorMessage = "Please pass the csv data in using the csv attribute in the request body";
+                log.Info("BadRequest: " + errorMessage);
+                return new BadRequestObjectResult(errorMessage);
             }
 
             log.Info("csv data is present.");
@@ -107,7 +116,7 @@ namespace FunctionAppCSVToJSON
                 }
             }
 
-            log.Info(string.Format("There were {0} lines skipped, including the header row.", lineSkipCounter));
+            log.Info(string.Format("There were {0} lines skipped, not including the header row.", lineSkipCounter));
 
             return (ActionResult)new OkObjectResult(resultSet);
         }
