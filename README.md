@@ -16,8 +16,6 @@ rowsToSkip - This indicates the number of rows to skip in the conversion process
 
 fileName - This is the source file where the data came from. This is passed in for down stream processes that may need to know which file was processed.
 
-hasHeaders - This bool value is used to indicated if the data has headers in the file.
-
 csv - This is the raw data from the source file that you want converted to JSON.
 This content may contain \r\n or \n end of line markers. The function will detect them an process the csv data accordingly.
 
@@ -25,7 +23,6 @@ This content may contain \r\n or \n end of line markers. The function will detec
 {
   "rowsToSkip": 1,
   "fileName": "MyTestCSVFile.csv",
-  "hasHeaders": true,
   "csv":"ID,Name,Score
 1,Aaron,99
 2,Dave,55
