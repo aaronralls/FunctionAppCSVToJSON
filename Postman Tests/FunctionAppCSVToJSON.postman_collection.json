@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"rowsToSkip\": 1,\n  \"fileName\": \"MyTestCSVFile.csv\",\n  \"hasHeaders\": true,\n  \"csv\":\"ID,Name,Score\n1,Aaron,99\n2,Dave,55\n3,Susy,77\n\"\n}"
+					"raw": "{\n  \"rowsToSkip\": 1,\n  \"fileName\": \"MyTestCSVFile.csv\",\n  \"csv\":\"ID,Name,Score\n1,Aaron,99\n2,Dave,55\n3,Susy,77\n\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:7071/api/CSVToJSON",
@@ -38,7 +38,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"rowsToSkip\": 1,\n  \n  \"hasHeaders\": true,\n  \"csv\":\"ID,Name,Score\n1,Aaron,99\n2,Dave,55\n3,Susy,77\n\"\n}"
+					"raw": "{\n  \"rowsToSkip\": 1,\n  \n  \"csv\":\"ID,Name,Score\n1,Aaron,99\n2,Dave,55\n3,Susy,77\n\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:7071/api/CSVToJSON",

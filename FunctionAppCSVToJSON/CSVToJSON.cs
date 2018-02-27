@@ -23,8 +23,7 @@ namespace FunctionAppCSVToJSON
 
             char[] fieldSeperator = new char[] { ',' };
 
-            string fileName = req.Query["fileName"];
-            string hasHeaders = req.Query["hasHeaders"];
+            string fileName = req.Query["fileName"];            
             string rowsToSkipStr = req.Query["rowsToSkip"];
             string errorMessage = "";
 
@@ -33,8 +32,7 @@ namespace FunctionAppCSVToJSON
             int rowsToSkip = 0;
             long lineSkipCounter = 0;
 
-            fileName = fileName ?? data?.fileName;
-            hasHeaders = hasHeaders ?? data?.hasHeaders;
+            fileName = fileName ?? data?.fileName;          
             rowsToSkipStr = rowsToSkipStr ?? data?.rowsToSkip;
 
             if (rowsToSkipStr == null)
@@ -53,26 +51,7 @@ namespace FunctionAppCSVToJSON
                 errorMessage = "Please pass a fileName on the query string or in the request body";
                 log.Info("BadRequest: " + errorMessage);
                 return new BadRequestObjectResult(errorMessage);
-            }
-
-            if (hasHeaders == null)
-            {
-                errorMessage = "Please pass a hasHeaders on the query string or in the request body";
-                log.Info("BadRequest: " + errorMessage);
-                return new BadRequestObjectResult(errorMessage);
-            }
-            else
-            {
-                if (hasHeaders == "True" || hasHeaders == "true" || hasHeaders.ToUpper() == "TRUE")
-                {
-                    //if the rows to skip value was set to 1 and they have headers then we
-                    //do not need to increment the rows to skip.
-                    if(rowsToSkip == 0)
-                    {
-                        rowsToSkip = 1;
-                    }                    
-                }
-            }
+            }            
 
             string csvData = data?.csv;
 
