@@ -33,6 +33,35 @@ This content may contain \r\n or \n end of line markers. The function will detec
 "
 }
 ```
+
+### Sample Output
+
+fileName - This is the source file where the data came from. This is passed in for down stream processes that may need to know which file was processed.
+
+rows - list of the CSV data in JSON format, with the field name from the header row.
+
+```
+{
+    "fileName":"MyTestCSVFile.csv",
+    "rows":[
+      {
+        "ID":"1",
+        "Name":"Aaron",
+        "Score":"99"
+       },
+       {
+        "ID":"2",
+        "Name":"Dave",
+        "Score":"55"
+       },
+       {
+        "ID":"3",
+        "Name":"Susy",
+        "Score":"77"
+        }]
+}
+
+```
 ### Prerequisites
 
 What things you need to install the software and how to install them
