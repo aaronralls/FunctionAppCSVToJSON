@@ -92,9 +92,50 @@ End with an example of getting some data out of the system or using it for a lit
 Explain how to run the automated tests for this system
 
 ### Postman variables
+
+These variables used in the Postman tests.
+
 url - This is the URI of the Azure Function that you have published to or use for local testing. (ie: localhost:7071)
+This variable is in each [test collection](https://github.com/aaronralls/FunctionAppCSVToJSON/Postman%20Tests). Be sure to update them both.
+
+```
+"variable": [
+		{
+			"id": "10226ddb-3af2-4d88-a4da-efff2ffed2b3",
+			"key": "url",
+			"value": "localhost:7071",
+			"type": "text",
+			"description": ""
+		}
+	]
+```
+Or
+```
+variable": [
+		{
+			"id": "34f41e2c-c10f-46e8-b08f-bb1d3be4b714",
+			"key": "url",
+			"value": "YOUR_FUNCTION_APP_NAME_GOES_HERE.azurewebsites.net",
+			"type": "text",
+			"description": ""
+		}
+```
 
 functions-key - This is the Function Key that you can use to limit access to your Azure functions.
+This variable is only in the [Azure test collection](https://github.com/aaronralls/FunctionAppCSVToJSON/Postman%20Tests/FunctionAppCSVToJSON%20Azure.postman_collection.json).
+
+```
+"variable": [
+		....,
+		{
+			"id": "f7592072-64a6-4a15-b5d5-77c13b06487c",
+			"key": "functions-key",
+			"value": "YOUR_KEY_GOES_HERE",
+			"type": "string",
+			"description": ""
+		}
+	]
+```
 
 ### Break down into end to end tests
 
