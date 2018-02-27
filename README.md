@@ -104,12 +104,22 @@ There are two [Postman collections](https://github.com/aaronralls/FunctionAppCSV
 
 FunctionAppCSVToJSON 
 
+```
+POST to CSVToJSON with Windows text file contents
+
+Negative Test: POST to CSVToJSON with Windows text file contents, no filename
+```
+
 #### Azure Testing Collection
 
 FunctionAppCSVToJSON Azure
 
 ```
-Give an example
+POST to CSVToJSON with Windows text file contents
+
+Negative Test: POST to CSVToJSON with Windows text file contents, no filename
+
+CSVToJSON swagger
 ```
 
 ### And coding style tests
