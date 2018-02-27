@@ -98,7 +98,15 @@ functions-key - This is the Function Key that you can use to limit access to you
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
+There are two [Postman collections](https://github.com/aaronralls/FunctionAppCSVToJSON/tree/master/Postman%20Tests) that cover the testing of the CSVToJSON function. One for local testing and the other for Azure testing.
+
+#### Local Testing Collection
+
+FunctionAppCSVToJSON 
+
+#### Azure Testing Collection
+
+FunctionAppCSVToJSON Azure
 
 ```
 Give an example
