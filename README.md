@@ -2,6 +2,8 @@
 
 Azure Function App that converts CSV data to JSON
 
+I created this Azure Function as part of a larger solution to process incomming SFTP files. One possible soltion is to convert the CSV data to JSON and then perform Azure [SQL Bulk OPENROWSETS Bulk Inserts](https://blogs.msdn.microsoft.com/sqlserverstorageengine/2015/10/07/bulk-importing-json-files-into-sql-server/).
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -83,6 +85,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * This is based on the [CSVToJSON API](https://github.com/jeffhollan/CSVtoJSON) created by [Jeff Hollan](https://github.com/jeffhollan)
-* I created this Azure Function as part of a larger solution to process incomming SFTP files. One possible soltion is to convert the CSV data to JSON and then perform Azure [SQL Bulk OPENROWSETS Bulk Inserts](https://blogs.msdn.microsoft.com/sqlserverstorageengine/2015/10/07/bulk-importing-json-files-into-sql-server/).
+
 * etc
 
