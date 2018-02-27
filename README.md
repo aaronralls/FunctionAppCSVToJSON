@@ -203,3 +203,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 * etc
 
+## Resources ##
+
+- [Azure Functions Documentation](https://docs.microsoft.com/en-us/azure/azure-functions/)
+- Contact me on twitter [@cajunAA](https://www.twitter.com/cajunAA)
