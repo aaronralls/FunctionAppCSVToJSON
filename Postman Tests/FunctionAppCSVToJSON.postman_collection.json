@@ -1,0 +1,60 @@
+{
+	"info": {
+		"name": "FunctionAppCSVToJSON",
+		"_postman_id": "f5f8f342-f087-49fd-932e-f13205bdddf5",
+		"description": "Azure Function App that converts CSV to JSON.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST to CSVToJSON with Windows text file contents",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"rowsToSkip\": 1,\n  \"fileName\": \"MyTestCSVFile.csv\",\n  \"hasHeaders\": true,\n  \"csv\":\"ID,Name,Score\n1,Aaron,99\n2,Dave,55\n3,Susy,77\n\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/CSVToJSON",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"CSVToJSON"
+					]
+				},
+				"description": "Positive Test with a file content that has line feed of \\r"
+			},
+			"response": []
+		},
+		{
+			"name": "Negative Test: POST to CSVToJSON with Windows text file contents, no filename",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"rowsToSkip\": 1,\n  \n  \"hasHeaders\": true,\n  \"csv\":\"ID,Name,Score\n1,Aaron,99\n2,Dave,55\n3,Susy,77\n\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/CSVToJSON",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"CSVToJSON"
+					]
+				},
+				"description": "Positive Test with a file content that has line feed of \\r"
+			},
+			"response": []
+		}
+	]
+}
