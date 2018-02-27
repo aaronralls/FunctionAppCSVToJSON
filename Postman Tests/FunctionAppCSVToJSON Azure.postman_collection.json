@@ -1,8 +1,8 @@
 {
 	"info": {
-		"name": "FunctionAppCSVToJSON",
-		"_postman_id": "f5f8f342-f087-49fd-932e-f13205bdddf5",
-		"description": "Azure Function App that converts CSV to JSON.",
+		"name": "FunctionAppCSVToJSON Azure",
+		"_postman_id": "ef123622-a585-43c0-b44f-4c8b74c872af",
+		"description": "Azure Function App that converts CSV to JSON. Test actions for the function published to Azure.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -10,7 +10,12 @@
 			"name": "POST to CSVToJSON with Windows text file contents",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "x-functions-key",
+						"value": "{{functions-key}}"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n  \"rowsToSkip\": 1,\n  \"fileName\": \"MyTestCSVFile.csv\",\n  \"csv\":\"ID,Name,Score\n1,Aaron,99\n2,Dave,55\n3,Susy,77\n\"\n}"
@@ -34,7 +39,12 @@
 			"name": "Negative Test: POST to CSVToJSON with Windows text file contents, no filename",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "x-functions-key",
+						"value": "{{functions-key}}"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n  \"rowsToSkip\": 1,\n  \n  \"csv\":\"ID,Name,Score\n1,Aaron,99\n2,Dave,55\n3,Susy,77\n\"\n}"
@@ -53,13 +63,44 @@
 				"description": "Negative Test no fileName passed in."
 			},
 			"response": []
+		},
+		{
+			"name": "CSVToJSON swagger",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-functions-key",
+						"value": "{{functions-key}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/admin/host/swagger",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"host",
+						"swagger"
+					]
+				},
+				"description": null
+			},
+			"response": []
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "65e5897b-4e4d-4552-94f4-f1deaa7c464d",
+				"id": "9247aaa8-16f4-41e8-b98e-bf5a8d0e687b",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -69,7 +110,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "197cc714-c7e7-43f8-b799-eb93f8d7425c",
+				"id": "b0417f75-1a4a-4d11-aa93-fe1a2ed2feb5",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -78,12 +119,19 @@
 		}
 	],
 	"variable": [
-		{
-			"id": "3962692e-26ae-47f3-8e17-bcc5c394d86a",
-			"key": "url",
-			"value": "localhost:7071",
-			"type": "text",
-			"description": ""
-		}
+    {
+      "id": "c93a08a5-6274-4478-a6d5-6a7f95a3cd2b",
+      "key": "url",
+      "value": "YOUR_FUNCTION_APP_NAME_GOES_HERE.azurewebsites.net",
+      "type": "text",
+      "description": ""
+    },
+    {
+      "id": "c6c06333-0212-4706-9952-be20393b0f57",
+      "key": "functions-key",
+      "value": "YOUR_KEY_GOES_HERE",
+      "type": "string",
+      "description": ""
+    }
 	]
 }
