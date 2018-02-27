@@ -91,6 +91,11 @@ End with an example of getting some data out of the system or using it for a lit
 
 Explain how to run the automated tests for this system
 
+### Postman variables
+url - This is the URI of the Azure Function that you have published to or use for local testing. (ie: localhost:7071)
+
+functions-key - This is the Function Key that you can use to limit access to your Azure functions.
+
 ### Break down into end to end tests
 
 Explain what these tests test and why
