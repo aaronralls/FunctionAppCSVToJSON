@@ -65,7 +65,9 @@ What things you need to install the software and how to install them
 
 ```
 Visual Studio 15.5.7 
+Postman v6.0.7
 ```
+Download [Postman v6.0.7](https://www.getpostman.com/) 
 
 ### Installing
 
