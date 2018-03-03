@@ -32,7 +32,7 @@ csv - This is the raw data from the source file that you want to be converted to
 
 ### Sample Output
 
-fileName - This is the source file where the data came from. This is passed in for down stream processes that may need to know which file was processed.
+fileName - This is the source file where the data came from. This is passed in for downstream processes that may need to know which file was processed.
 
 rows - list of the CSV data in JSON format, with the field name from the header row.
 
