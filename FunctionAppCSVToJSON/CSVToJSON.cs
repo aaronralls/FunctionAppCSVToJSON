@@ -14,93 +14,93 @@ using System;
 
 namespace FunctionAppCSVToJSON
 {
-    public static class CSVToJSON
+public static class CSVToJSON
+{
+    [FunctionName("CSVToJSON")]
+    public static IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequest req, TraceWriter log)
     {
-        [FunctionName("CSVToJSON")]
-        public static IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequest req, TraceWriter log)
+        log.Info("C# HTTP trigger function CSVToJSON processed a request.");
+
+        char[] fieldSeperator = new char[] { ',' };
+
+        string fileName = req.Query["fileName"];            
+        string rowsToSkipStr = req.Query["rowsToSkip"];
+        string errorMessage = "";
+
+        string requestBody = new StreamReader(req.Body).ReadToEnd();
+        dynamic data = JsonConvert.DeserializeObject(requestBody);
+        int rowsToSkip = 0;
+        long lineSkipCounter = 0;
+
+        fileName = fileName ?? data?.fileName;          
+        rowsToSkipStr = rowsToSkipStr ?? data?.rowsToSkip;
+
+        if (rowsToSkipStr == null)
         {
-            log.Info("C# HTTP trigger function CSVToJSON processed a request.");
+            errorMessage = "Please pass a rowsToSkip on the query string or in the request body";
+            log.Info("BadRequest: " + errorMessage);
+            return new BadRequestObjectResult(errorMessage);
+        }
+        else
+        {
+            Int32.TryParse(rowsToSkipStr, out rowsToSkip);                
+        }
 
-            char[] fieldSeperator = new char[] { ',' };
+        if (fileName == null)
+        {
+            errorMessage = "Please pass a fileName on the query string or in the request body";
+            log.Info("BadRequest: " + errorMessage);
+            return new BadRequestObjectResult(errorMessage);
+        }            
 
-            string fileName = req.Query["fileName"];            
-            string rowsToSkipStr = req.Query["rowsToSkip"];
-            string errorMessage = "";
+        string csvData = data?.csv;
 
-            string requestBody = new StreamReader(req.Body).ReadToEnd();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            int rowsToSkip = 0;
-            long lineSkipCounter = 0;
+        if (csvData == null)
+        {
+            errorMessage = "Please pass the csv data in using the csv attribute in the request body";
+            log.Info("BadRequest: " + errorMessage);
+            return new BadRequestObjectResult(errorMessage);
+        }
 
-            fileName = fileName ?? data?.fileName;          
-            rowsToSkipStr = rowsToSkipStr ?? data?.rowsToSkip;
+        log.Info("csv data is present.");
 
-            if (rowsToSkipStr == null)
+        string[] csvLines = ToLines(csvData);
+
+        log.Info(string.Format("There are {0} lines in the csv content {1}.", csvLines.Count(), fileName));
+
+        var headers = csvLines[0].Split(fieldSeperator).ToList<string>();
+
+        JsonResult resultSet = new JsonResult(fileName);
+
+
+        foreach (var line in csvLines.Skip(rowsToSkip))
+        {
+            //Check to see if a line is blank.
+            //This can happen on the last row if improperly terminated.
+            if (line != "" || line.Trim().Length > 0 )
             {
-                errorMessage = "Please pass a rowsToSkip on the query string or in the request body";
-                log.Info("BadRequest: " + errorMessage);
-                return new BadRequestObjectResult(errorMessage);
+                var lineObject = new JObject();
+                var fields = line.Split(fieldSeperator);
+
+                for (int x = 0; x < headers.Count; x++)
+                {
+                    lineObject[headers[x]] = fields[x];
+                }
+
+                resultSet.Rows.Add(lineObject);
             }
             else
             {
-                Int32.TryParse(rowsToSkipStr, out rowsToSkip);                
+                lineSkipCounter += 1;
             }
-
-            if (fileName == null)
-            {
-                errorMessage = "Please pass a fileName on the query string or in the request body";
-                log.Info("BadRequest: " + errorMessage);
-                return new BadRequestObjectResult(errorMessage);
-            }            
-
-            string csvData = data?.csv;
-
-            if (csvData == null)
-            {
-                errorMessage = "Please pass the csv data in using the csv attribute in the request body";
-                log.Info("BadRequest: " + errorMessage);
-                return new BadRequestObjectResult(errorMessage);
-            }
-
-            log.Info("csv data is present.");
-
-            string[] csvLines = ToLines(csvData);
-
-            log.Info(string.Format("There are {0} lines in the csv content {1}.", csvLines.Count(), fileName));
-
-            var headers = csvLines[0].Split(fieldSeperator).ToList<string>();
-
-            JsonResult resultSet = new JsonResult(fileName);
-
-
-            foreach (var line in csvLines.Skip(rowsToSkip))
-            {
-                //Check to see if a line is blank.
-                //This ca happen on the last row if improperly terminated.
-                if (line != "" || line.Trim().Length > 0 )
-                {
-                    var lineObject = new JObject();
-                    var fields = line.Split(fieldSeperator);
-
-                    for (int x = 0; x < headers.Count; x++)
-                    {
-                        lineObject[headers[x]] = fields[x];
-                    }
-
-                    resultSet.Rows.Add(lineObject);
-                }
-                else
-                {
-                    lineSkipCounter += 1;
-                }
-            }
-
-            log.Info(string.Format("There were {0} lines skipped, not including the header row.", lineSkipCounter));
-
-            return (ActionResult)new OkObjectResult(resultSet);
         }
 
-        private static string[] ToLines(string dataIn)
+        log.Info(string.Format("There were {0} lines skipped, not including the header row.", lineSkipCounter));
+
+        return (ActionResult)new OkObjectResult(resultSet);
+    }
+
+    private static string[] ToLines(string dataIn)
         {            
             char[] EOLMarkerR = new char[] { '\r' };
             char[] EOLMarkerN = new char[] { '\n' };
