@@ -10,14 +10,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Sample Input
 
-The JSON the function accepts consists of the followning fields.
+The JSON the function accepts consists of the following fields.
 
 rowsToSkip - This indicates the number of rows to skip in the conversion process.
 
-fileName - This is the source file where the data came from. This is passed in for down stream processes that may need to know which file was processed.
+fileName - This is the source file where the data came from. This is passed in for downstream processes that may need to know which file was processed.
 
-csv - This is the raw data from the source file that you want converted to JSON.
-This content may contain \r\n or \n end of line markers. The function will detect them an process the csv data accordingly.
+csv - This is the raw data from the source file that you want to be converted to JSON. This content may contain \r\n or \n end of line markers. The function will detect them an process the csv data accordingly.
 
 ```
 {
@@ -33,7 +32,7 @@ This content may contain \r\n or \n end of line markers. The function will detec
 
 ### Sample Output
 
-fileName - This is the source file where the data came from. This is passed in for down stream processes that may need to know which file was processed.
+fileName - This is the source file where the data came from. This is passed in for downstream processes that may need to know which file was processed.
 
 rows - list of the CSV data in JSON format, with the field name from the header row.
 
@@ -163,14 +162,6 @@ Negative Test: POST to CSVToJSON with Windows text file contents, no filename
 CSVToJSON swagger
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ## Deployment
 
 Add additional notes about how to deploy this on a live system
@@ -195,7 +186,7 @@ See also the list of [contributors](https://github.com/AaronRalls/FunctionAppCSV
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
 
 ## Acknowledgments
 
