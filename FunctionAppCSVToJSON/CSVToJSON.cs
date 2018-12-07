@@ -59,6 +59,8 @@ public static class CSVToJSON
         byte[] byteArray = Encoding.UTF8.GetBytes(csvData);
         MemoryStream csvStream = new MemoryStream(byteArray);
 
+
+        log.LogInformation("translating CSV Data to a list");
         var records = Convert(csvStream);
 
         JArray jsonarray = JArray.FromObject(records);
@@ -76,11 +78,18 @@ public static class CSVToJSON
 
         return (ActionResult)new OkObjectResult(resultSet);
     }
-
         public static List<object> Convert(Stream blob)
         {
+            
             var sReader = new StreamReader(blob);
             var csv = new CsvReader(sReader);
+
+            //log bad data
+            csv.Configuration.BadDataFound = context =>
+                {
+                    
+                };
+
 
             csv.Read();
             csv.ReadHeader();
@@ -103,4 +112,6 @@ public static class CSVToJSON
         public JArray Rows { get; set; }
     }
 }
+
+   
 }
