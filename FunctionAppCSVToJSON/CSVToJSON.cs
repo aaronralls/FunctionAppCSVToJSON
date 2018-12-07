@@ -22,7 +22,7 @@ public static class CSVToJSON
     [FunctionName("CSVToJSON")]
     public static IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequest req, ILogger log)
     {
-        log.Info("C# HTTP trigger function CSVToJSON processed a request.");
+        log.LogInformation("C# HTTP trigger function CSVToJSON processed a request.");
 
         string fileName = req.Query["fileName"];
         string errorMessage = "";
@@ -35,7 +35,7 @@ public static class CSVToJSON
         if (fileName == null)
         {
             errorMessage = "Please pass a fileName on the query string or in the request body";
-            log.Info("BadRequest: " + errorMessage);
+            log.LogInformation("BadRequest: " + errorMessage);
             return new BadRequestObjectResult(errorMessage);
         }            
 
@@ -44,11 +44,11 @@ public static class CSVToJSON
         if (csvData == null)
         {
             errorMessage = "Please pass the csv data in using the csv attribute in the request body";
-            log.Info("BadRequest: " + errorMessage);
+            log.LogInformation("BadRequest: " + errorMessage);
             return new BadRequestObjectResult(errorMessage);
         }
 
-        log.Info("csv data is present.");
+        log.LogInformation("csv data is present.");
 
         
 
@@ -69,7 +69,7 @@ public static class CSVToJSON
 
         
 
-        log.Info(string.Format("There are {0} lines in the csv records content {1}.", records.Count(), fileName));
+        log.LogInformation(string.Format("There are {0} lines in the csv records content {1}.", records.Count(), fileName));
 
         
         
