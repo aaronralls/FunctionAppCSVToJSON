@@ -12,15 +12,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 The JSON the function accepts consists of the following fields.
 
-rowsToSkip - This indicates the number of rows to skip in the conversion process.
-
 fileName - This is the source file where the data came from. This is passed in for downstream processes that may need to know which file was processed.
 
 csv - This is the raw data from the source file that you want to be converted to JSON. This content may contain \r\n or \n end of line markers. The function will detect them an process the csv data accordingly.
 
 ```
 {
-  "rowsToSkip": 1,
   "fileName": "MyTestCSVFile.csv",
   "csv":"ID,Name,Score
 1,Aaron,99
