@@ -13,13 +13,14 @@ using System.Linq;
 using System;
 using CsvHelper;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 namespace FunctionAppCSVToJSON
 {
 public static class CSVToJSON
 {
     [FunctionName("CSVToJSON")]
-    public static IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequest req, TraceWriter log)
+    public static IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequest req, ILogger log)
     {
         log.Info("C# HTTP trigger function CSVToJSON processed a request.");
 
