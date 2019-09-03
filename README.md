@@ -2,7 +2,7 @@
 
 Azure Function App [V2](https://docs.microsoft.com/en-us/azure/azure-functions/functions-versions) that converts CSV data to JSON
 
-I created this Azure Function as part of a larger solution to process incomming SFTP files. One possible soltion is to convert the CSV data to JSON and then perform Azure [SQL Bulk OPENROWSETS Bulk Inserts](https://blogs.msdn.microsoft.com/sqlserverstorageengine/2015/10/07/bulk-importing-json-files-into-sql-server/).
+I Forked this from [aaronralls](https://github.com/aaronralls/FunctionAppCSVToJSON) originally and changed the convert function to leverage [csvhelper](https://joshclose.github.io/CsvHelper/). This Azure Function as part of a larger solution to process incomming SFTP files.
 
 ## Getting Started
 
@@ -10,9 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Sample Input
 
-The JSON the function accepts consists of the following fields.
-
-rowsToSkip - This indicates the number of rows to skip in the conversion process.
+The JSON the function accepts consists of the following body fields.
 
 fileName - This is the source file where the data came from. This is passed in for downstream processes that may need to know which file was processed.
 
@@ -20,7 +18,6 @@ csv - This is the raw data from the source file that you want to be converted to
 
 ```
 {
-  "rowsToSkip": 1,
   "fileName": "MyTestCSVFile.csv",
   "csv":"ID,Name,Score
 1,Aaron,99
@@ -63,10 +60,11 @@ rows - list of the CSV data in JSON format, with the field name from the header 
 What things you need to install the software and how to install them
 
 ```
-Visual Studio 15.5.7 
+Visual Studio Code
 Postman v6.0.7
+Azure Subscription
+Azure funciton app service
 ```
-Download [Postman v6.0.7](https://www.getpostman.com/) 
 
 ### Installing
 
@@ -95,7 +93,7 @@ Explain how to run the automated tests for this system
 These variables used in the Postman tests.
 
 url - This is the URI of the Azure Function that you have published to or use for local testing. (ie: localhost:7071)
-This variable is in each [test collection](https://github.com/aaronralls/FunctionAppCSVToJSON/Postman%20Tests). Be sure to update them both.
+This variable is in each [test collection](https://github.com/houstonjb/FunctionAppCSVToJSON/Postman%20Tests). Be sure to update them both.
 
 ```
 "variable": [
@@ -121,7 +119,7 @@ variable": [
 ```
 
 functions-key - This is the Function Key that you can use to limit access to your Azure functions.
-This variable is only in the [Azure test collection](https://github.com/aaronralls/FunctionAppCSVToJSON/Postman%20Tests/FunctionAppCSVToJSON%20Azure.postman_collection.json).
+This variable is only in the [Azure test collection](https://github.com/houstonjb/FunctionAppCSVToJSON/Postman%20Tests/FunctionAppCSVToJSON%20Azure.postman_collection.json).
 
 ```
 "variable": [
@@ -138,17 +136,7 @@ This variable is only in the [Azure test collection](https://github.com/aaronral
 
 ### Break down into end to end tests
 
-There are two [Postman collections](https://github.com/aaronralls/FunctionAppCSVToJSON/tree/master/Postman%20Tests) that cover the testing of the CSVToJSON function. One for local testing and the other for Azure testing.
 
-#### Local Testing Collection
-
-FunctionAppCSVToJSON 
-
-```
-POST to CSVToJSON with Windows text file contents
-
-Negative Test: POST to CSVToJSON with Windows text file contents, no filename
-```
 
 #### Azure Testing Collection
 
@@ -164,25 +152,27 @@ CSVToJSON swagger
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+deploy to Azure function app using your favorite deployment methods.
 
 ## Built With
 
-
+.net core standard version 2.1 using Visual Studio Code and macOS. 
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/AaronRalls/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+send it.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/AaronRalls/FunctionAppCSVToJSON/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [releases on this repository](https://github.com/houstonjb/FunctionAppCSVToJSON/releases). 
 
 ## Authors
 
 * **Aaron Ralls** - *Initial work* - [Aaron Ralls](https://github.com/AaronRalls)
 
-See also the list of [contributors](https://github.com/AaronRalls/FunctionAppCSVToJSON/contributors) who participated in this project.
+* **houstonjb** - *Modified* - [houstonjb](https://github.com/houstonjb)
+
+See also the list of [contributors](https://github.com/houstonjb/FunctionAppCSVToJSON/contributors) who participated in this project.
 
 ## License
 
@@ -197,4 +187,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) f
 ## Resources ##
 
 - [Azure Functions Documentation](https://docs.microsoft.com/en-us/azure/azure-functions/)
-- Contact me on twitter [@cajunAA](https://www.twitter.com/cajunAA)
